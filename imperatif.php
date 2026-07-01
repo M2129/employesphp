@@ -110,3 +110,65 @@ if ($categorieExiste) {
 } else {
     echo "désolé, la categorie n'existe pas...\n";
 }
+
+// 5 - Créer une catégorie avec plusieurs produits saisis d'un coup
+
+do {
+    $codeIsValid = true;
+    $code = readline("saisir le code : ");
+
+    if (empty($code)) {
+        echo "le code est obligatoire \n";
+        $codeIsValid = false;
+    } else {
+        foreach ($categories as $categorie) {
+            if ($categorie["code"] === $code) {
+                $codeIsValid = false;
+                echo "le code existe deja ...\n";
+                break;
+            }
+        }
+    }
+} while (!$codeIsValid);
+
+do {
+    $nomIsValid = true;
+    $nom = readline("saisir le nom : ");
+
+    if (empty($nom)) {
+        echo "le nom est obligatoire \n";
+        $nomIsValid = false;
+    } else {
+        foreach ($categories as $categorie) {
+            if ($categorie["nom"] === $nom) {
+                $nomIsValid = false;
+                echo "le nom existe deja ...\n";
+                break;
+            }
+        }
+    }
+} while (!$nomIsValid);
+
+$produits = [];
+
+do {
+    $produit = [
+        "nom" => readline("saisir le nom : "),
+        "reference" => readline("saisir la reference : "),
+        "prix" => (int)readline("saisir le prix : "),
+        "quantite" => (int)readline("saisir la quantité : ")
+    ];
+    $produits[] = $produit;
+
+    $choix = strtolower(trim(readline("voulez vous continuer oui/non : ")));
+} while ($choix === "oui");
+
+$categorie = [
+    "code" => $code,
+    "nom" => $nom,
+    "produits" => $produits
+];
+
+$categories[] = $categorie;
+
+echo "Catégorie et produits ajoutés avec succès.\n";
