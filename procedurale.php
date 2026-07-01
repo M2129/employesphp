@@ -60,3 +60,43 @@ function champObligatoire(string $value, string $message): bool
     }
     return true;
 }
+
+
+/**
+ * Recherche une catégorie par une clé donnée (ex: "code" ou "nom").
+ * Retourne l'index trouvé, ou false si aucune correspondance.
+ */
+function rechercheCategorieParCle(array $categories, string $key, string $value): int|bool
+{
+    foreach ($categories as $index => $categorie) {
+        if ($categorie[$key] === $value) {
+            return $index;
+        }
+    }
+    return false;
+}
+
+/**
+ * Demande une saisie obligatoire ET unique (vérifiée parmi les catégories existantes).
+ * Redemande tant que la valeur est vide ou déjà utilisée.
+ */
+function saisieChampObligatoireEtUnique(array $categories, string $smsSaisie, string $smsError, string $key): string
+{
+    $valueIsValid = false;
+
+    do {
+        $value = saisieChaine($smsSaisie);
+        $valueIsValid = champObligatoire($value, $smsError);
+
+        if ($valueIsValid) {
+            $existe = rechercheCategorieParCle($categories, $key, $value);
+            $valueIsValid = ($existe === false);
+
+            if (!$valueIsValid) {
+                echo "Cette valeur existe déjà, veuillez en choisir une autre.\n";
+            }
+        }
+    } while (!$valueIsValid);
+
+    return $value;
+}
