@@ -83,3 +83,30 @@ $categorie = [
 $categories[] = $categorie;
 
 echo "Catégorie ajoutée avec succès.\n";
+
+// 4 - Ajouter un produit à une catégorie existante
+
+$categorieExiste = false;
+$indexCategorie = null;
+$code = readline("saisir le code de la categorie : ");
+
+foreach ($categories as $index => $categorie) {
+    if ($categorie["code"] === $code) {
+        $categorieExiste = true;
+        $indexCategorie = $index; // on sauvegarde explicitement l'index trouvé
+        break;
+    }
+}
+
+if ($categorieExiste) {
+    $produit = [
+        "nom" => readline("saisir le nom : "),
+        "reference" => readline("saisir la reference : "),
+        "prix" => (int)readline("saisir le prix : "),
+        "quantite" => (int)readline("saisir la quantité : ")
+    ];
+    $categories[$indexCategorie]["produits"][] = $produit;
+    echo "Produit ajouté avec succès.\n";
+} else {
+    echo "désolé, la categorie n'existe pas...\n";
+}
