@@ -39,3 +39,24 @@ function afficheCategorieSansProduit(array $categories): void
 }
 
 afficheCategorieSansProduit($categories);
+
+/**
+ * Demande une saisie utilisateur via un message donné.
+ */
+function saisieChaine(string $message): string
+{
+    return trim(readline($message));
+}
+
+/**
+ * Vérifie qu'une valeur n'est pas vide.
+ * Affiche un message d'erreur si elle l'est.
+ */
+function champObligatoire(string $value, string $message): bool
+{
+    if (empty($value)) {
+        echo $message . "\n";
+        return false;
+    }
+    return true;
+}
