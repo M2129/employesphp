@@ -35,3 +35,51 @@ foreach ($categories as $categorie) {
         echo $categorie["nom"] . "\n";
     }
 }
+
+// 3 - Créer une nouvelle catégorie (code + nom obligatoires et uniques)
+
+do {
+    $codeIsValid = true; // ✅ réinitialisé à CHAQUE tour
+    $code = readline("saisir le code : ");
+
+    if (empty($code)) {
+        echo "le code est obligatoire \n";
+        $codeIsValid = false;
+    } else {
+        foreach ($categories as $categorie) {
+            if ($categorie["code"] === $code) {
+                $codeIsValid = false;
+                echo "le code existe deja ...\n";
+                break; // inutile de continuer à chercher
+            }
+        }
+    }
+} while (!$codeIsValid);
+
+do {
+    $nomIsValid = true; // ✅ réinitialisé à CHAQUE tour
+    $nom = readline("saisir le nom : ");
+
+    if (empty($nom)) {
+        echo "le nom est obligatoire \n";
+        $nomIsValid = false;
+    } else {
+        foreach ($categories as $categorie) {
+            if ($categorie["nom"] === $nom) {
+                $nomIsValid = false;
+                echo "le nom existe deja ...\n";
+                break;
+            }
+        }
+    }
+} while (!$nomIsValid);
+
+$categorie = [
+    "code" => $code,
+    "nom" => $nom,
+    "produits" => []
+];
+
+$categories[] = $categorie;
+
+echo "Catégorie ajoutée avec succès.\n";
