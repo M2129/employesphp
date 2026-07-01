@@ -25,3 +25,17 @@ function initialiserEmployes(): array {
         ]
     ];
 }
+function recupererDepartement(array $employes): array {
+    $departements = [];
+    foreach ($employes as $employe) {
+        $code = $employe['departement']['code'];
+
+        if (!isset($departements[$code])) {
+            $departements[$code] = $employe['departement'];
+        }
+    }
+    return array_values($departements);
+}
+
+$employes = initialiserEmployes();
+$departements = recupererDepartement($employes);
